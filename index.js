@@ -1,19 +1,22 @@
 /**
- * BloomSphere Solutions — Contact Form Mailer
+ * CarePlasma — Website Form Mailer
  * ---------------------------------------------------------------------------
- * Mirrors the architecture of Fannin Infusion Pharmacy's ReferralFormMailer:
- * a small Cloudflare Worker that receives the contact form's POST request
- * and relays it as an email to the practice's inbox — no third-party form
- * SaaS, no server to maintain.
+ * A small Cloudflare Worker that receives POSTs from the "Get In Touch",
+ * "Choose Center", and "Careers" forms on the CarePlasma website and relays
+ * each one as an email to TO_EMAIL — no third-party form SaaS, no server to
+ * maintain. The Careers form may also include a resume file, which is
+ * forwarded as an email attachment.
  *
  * Required setup (see README.md for full steps):
  *   - Secret:      RESEND_API_KEY   (from https://resend.com — free tier)
- *   - Variable:    TO_EMAIL         (the inbox that should receive submissions)
+ *   - Variable:    TO_EMAIL         (comma-separated list of inboxes to receive submissions)
  *   - Variable:    FROM_EMAIL       (optional; defaults to onboarding@resend.dev
  *                                    until you verify your own domain in Resend)
  *   - Variable:    ALLOWED_ORIGIN   (your site's origin, for CORS lock-down)
  * ---------------------------------------------------------------------------
  */
+
+const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024; // 8MB — comfortably under Resend's request size limit
 
 export default {
   async fetch(request, env) {
@@ -51,12 +54,19 @@ export default {
     const name = (formData.get("name") || "").toString().trim();
     const email = (formData.get("email") || "").toString().trim();
     const phone = (formData.get("phone") || "").toString().trim();
+    const topic = (formData.get("subject") || "").toString().trim(); // user-entered topic, shown in the email body
     const message = (formData.get("message") || "").toString().trim();
-    const subject = (formData.get("_subject") || "New contact form submission").toString();
-    const fromName = (formData.get("_from_name") || "BloomSphere Solutions Website").toString();
+    const emailSubject = (formData.get("_subject") || "New contact form submission").toString();
+    const fromName = (formData.get("_from_name") || "CarePlasma Website").toString();
 
     if (!email) {
       return jsonResponse({ success: false, message: "An email address is required." }, 400, corsHeaders);
+    }
+
+    const resume = formData.get("resume");
+    const hasResume = resume && typeof resume === "object" && typeof resume.arrayBuffer === "function" && resume.size > 0;
+    if (hasResume && resume.size > MAX_ATTACHMENT_BYTES) {
+      return jsonResponse({ success: false, message: "Resume file is too large (8MB max)." }, 400, corsHeaders);
     }
 
     if (!env.RESEND_API_KEY) {
@@ -75,14 +85,25 @@ export default {
     }
 
     const fromAddress = env.FROM_EMAIL || "onboarding@resend.dev";
+    const toAddresses = env.TO_EMAIL.split(",").map((addr) => addr.trim()).filter(Boolean);
+
+    const attachments = [];
+    if (hasResume) {
+      attachments.push({
+        filename: resume.name || "resume",
+        content: arrayBufferToBase64(await resume.arrayBuffer()),
+      });
+    }
 
     const htmlBody = `
-      <h2>New message from the BloomSphere Solutions website</h2>
+      <h2>New message from the CarePlasma website</h2>
       <p><strong>Name:</strong> ${escapeHtml(name) || "(not provided)"}</p>
       <p><strong>Email:</strong> ${escapeHtml(email)}</p>
       <p><strong>Phone:</strong> ${escapeHtml(phone) || "(not provided)"}</p>
+      ${topic ? `<p><strong>Subject:</strong> ${escapeHtml(topic)}</p>` : ""}
       <p><strong>Message:</strong></p>
       <p>${escapeHtml(message).replace(/\n/g, "<br>") || "(no message)"}</p>
+      ${hasResume ? `<p><strong>Attachment:</strong> ${escapeHtml(attachments[0].filename)}</p>` : ""}
     `;
 
     try {
@@ -94,10 +115,11 @@ export default {
         },
         body: JSON.stringify({
           from: `${fromName} <${fromAddress}>`,
-          to: [env.TO_EMAIL],
+          to: toAddresses,
           reply_to: email,
-          subject: subject,
+          subject: emailSubject,
           html: htmlBody,
+          ...(attachments.length ? { attachments } : {}),
         }),
       });
 
@@ -122,6 +144,16 @@ function jsonResponse(body, status, extraHeaders) {
     status,
     headers: { "Content-Type": "application/json", ...extraHeaders },
   });
+}
+
+function arrayBufferToBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  const chunkSize = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+  }
+  return btoa(binary);
 }
 
 function escapeHtml(str) {

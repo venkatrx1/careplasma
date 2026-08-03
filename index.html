@@ -7,7 +7,7 @@
 <meta name="description" content="Care Plasma offers top-notch plasma donation services in New York City. Earn up to $500 in your first month. Visit 1400 5th Avenue, NYC today.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
     --ink:#123C54;
@@ -95,8 +95,8 @@
   .brand-text span{color:var(--coral-deep);}
   nav.primary{display:flex;align-items:center;gap:28px;}
   nav.primary a{
-    font-size:16px;font-weight:700;color:var(--ink-soft);
-    text-transform:uppercase;letter-spacing:.03em;
+    font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:var(--ink-soft);
+    text-transform:uppercase;letter-spacing:0.08em;
     position:relative;padding:6px 0;
   }
   nav.primary a:hover{color:var(--coral-deep);}
@@ -642,8 +642,8 @@ nav.primary a.active{color:var(--coral-deep);}
   .nav-dropdown{position:relative;display:inline-block;}
   .nav-dropdown > .dropdown-trigger{
     cursor:pointer;display:inline-flex;align-items:center;gap:4px;
-    font-size:16px;font-weight:700;color:var(--ink-soft);padding:6px 0;
-    text-transform:uppercase;letter-spacing:.03em;
+    font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:var(--ink-soft);padding:6px 0;
+    text-transform:uppercase;letter-spacing:0.08em;
   }
   .nav-dropdown > .dropdown-trigger::after{content:"\25BE";font-size:11px;margin-left:2px;}
   .nav-dropdown:hover > .dropdown-trigger, .nav-dropdown:focus-within > .dropdown-trigger{color:var(--coral-deep);}
@@ -656,7 +656,8 @@ nav.primary a.active{color:var(--coral-deep);}
   }
   .nav-dropdown:hover .dropdown-menu, .nav-dropdown:focus-within .dropdown-menu{display:flex;}
   .dropdown-menu a{
-    padding:9px 12px;border-radius:8px;font-size:14px;font-weight:600;
+    padding:9px 14px;border-radius:8px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.06em;
     color:var(--ink-soft);white-space:nowrap;
   }
   .dropdown-menu a:hover{background:var(--cream-deep);color:var(--coral-deep);}
@@ -843,7 +844,7 @@ nav.primary a.active{color:var(--coral-deep);}
         <div class="dropdown-menu">
         <a href="#find-us" data-nav="find-us" onclick="showPage('find-us');return false;">Choose Center</a>
         <a href="#rewards" data-nav="rewards" onclick="showPage('rewards');return false;">Rewards Program</a>
-        <a href="#about" data-nav="about" onclick="showPage('about');return false;">About Us</a>
+        <a href="about-us.html">About Us</a>
         <a href="#faqs" data-nav="faqs" onclick="showPage('faqs');return false;">FAQs</a>
         <a href="#careers" data-nav="careers" onclick="showPage('careers');return false;">Careers</a>
         </div>
@@ -1142,16 +1143,18 @@ nav.primary a.active{color:var(--coral-deep);}
       </div>
       <div class="form-card">
         <h3 style="font-family:Fraunces,serif;font-size:22px;font-weight:600;color:var(--ink);margin:0 0 22px;">Send Us a Message</h3>
-        <form onsubmit="event.preventDefault();this.innerHTML='<div style=padding:40px;text-align:center><div style=font-size:48px>✅</div><h3 style=font-family:Fraunces,serif;color:var(--ink)>Message Sent!</h3><p style=color:var(--ink-soft)>Thank you for reaching out. We will get back to you within 1 business day.</p></div>'">
+        <form onsubmit="return submitCareplasmaForm(event, this, { subject: 'New Contact Form Message — CarePlasma Website', fromName: 'CarePlasma Website — Get In Touch', beforeSend: function(fd, form) { fd.set('name', (form.querySelector('[name=firstName]').value + ' ' + form.querySelector('[name=lastName]').value).trim()); }, onSuccess: function(form) { form.innerHTML = '<div style=padding:40px;text-align:center><div style=font-size:48px>✅</div><h3 style=font-family:Fraunces,serif;color:var(--ink)>Message Sent!</h3><p style=color:var(--ink-soft)>Thank you for reaching out. We will get back to you within 1 business day.</p></div>'; } });">
+          <input type="text" name="_honey" value="" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
           <div class="form-row">
-            <div><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">First Name</label><input type="text" placeholder="Jane" required></div>
-            <div><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Last Name</label><input type="text" placeholder="Smith" required></div>
+            <div><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">First Name</label><input type="text" name="firstName" placeholder="Jane" required></div>
+            <div><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Last Name</label><input type="text" name="lastName" placeholder="Smith" required></div>
           </div>
-          <div class="form-full"><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Email Address</label><input type="email" placeholder="jane@example.com" required></div>
-          <div class="form-full"><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Phone Number</label><input type="tel" placeholder="(212) 000-0000"></div>
-          <div class="form-full"><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Subject</label><input type="text" placeholder="How do I get started?"></div>
-          <div class="form-full"><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Message</label><textarea rows="5" placeholder="Your message here..." style="width:100%;padding:13px 16px;border-radius:10px;border:1px solid var(--line);font-family:Inter,sans-serif;font-size:14.5px;background:var(--cream);resize:vertical;" required></textarea></div>
+          <div class="form-full"><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Email Address</label><input type="email" name="email" placeholder="jane@example.com" required></div>
+          <div class="form-full"><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Phone Number</label><input type="tel" name="phone" placeholder="(212) 000-0000"></div>
+          <div class="form-full"><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Subject</label><input type="text" name="subject" placeholder="How do I get started?"></div>
+          <div class="form-full"><label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Message</label><textarea rows="5" name="message" placeholder="Your message here..." style="width:100%;padding:13px 16px;border-radius:10px;border:1px solid var(--line);font-family:Inter,sans-serif;font-size:14.5px;background:var(--cream);resize:vertical;" required></textarea></div>
           <button type="submit" class="btn btn-primary" style="width:100%;font-size:16px;padding:16px 24px;margin-top:6px;">Send Message</button>
+          <p class="form-status" data-success-text="" style="display:none;color:crimson;font-size:13.5px;margin-top:12px;"></p>
         </form>
       </div>
     </div>
@@ -1614,24 +1617,25 @@ nav.primary a.active{color:var(--coral-deep);}
             <div><h4>Room to grow</h4><p>Development opportunities across every level, from entry to expert.</p></div>
           </div>
         </div>
-        <form class="form-card" onsubmit="event.preventDefault(); this.querySelector('.form-status').style.display='block';">
+        <form class="form-card" onsubmit="return submitCareplasmaForm(event, this, { subject: 'New Career Application — CarePlasma Website', fromName: 'CarePlasma Website — Careers' });">
+          <input type="text" name="_honey" value="" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
           <div class="form-row">
-            <input type="text" placeholder="Name*" required>
-            <input type="tel" placeholder="Phone">
+            <input type="text" name="name" placeholder="Name*" required>
+            <input type="tel" name="phone" placeholder="Phone">
           </div>
           <div class="form-full">
-            <input type="email" placeholder="Email*" required>
+            <input type="email" name="email" placeholder="Email*" required>
           </div>
           <div class="form-full">
-            <textarea rows="4" placeholder="Message"></textarea>
+            <textarea rows="4" name="message" placeholder="Message"></textarea>
           </div>
           <div class="form-full">
             <label for="resumeUpload" class="btn" style="width:100%;justify-content:center;background:var(--cream-deep);color:var(--ink);border:1px dashed var(--line);cursor:pointer;">📎 Attach Resume</label>
-            <input id="resumeUpload" type="file" style="display:none;" onchange="document.getElementById('attachCount').textContent = 'Attachments (' + this.files.length + ')';">
+            <input id="resumeUpload" name="resume" type="file" style="display:none;" onchange="document.getElementById('attachCount').textContent = 'Attachments (' + this.files.length + ')';">
             <p id="attachCount" style="font-size:13px;color:var(--ink-soft);margin-top:8px;">Attachments (0)</p>
           </div>
           <button class="btn btn-primary" type="submit" style="width:100%;margin-top:6px;">Submit Application</button>
-          <p class="form-status" style="display:none;color:var(--sky);font-size:13.5px;margin-top:12px;">Thanks — your application has been received. We'll be in touch shortly.</p>
+          <p class="form-status" data-success-text="Thanks — your application has been received. We'll be in touch shortly." style="display:none;color:var(--sky);font-size:13.5px;margin-top:12px;">Thanks — your application has been received. We'll be in touch shortly.</p>
           <p style="font-size:12px;color:var(--ink-soft);margin-top:14px;">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="text-decoration:underline;">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener" style="text-decoration:underline;">Terms of Service</a> apply.</p>
         </form>
       </div>
@@ -1715,19 +1719,20 @@ nav.primary a.active{color:var(--coral-deep);}
           </a>
         </div>
       </div>
-      <form class="form-card" onsubmit="event.preventDefault(); this.querySelector('.form-status').style.display='block';">
+      <form class="form-card" onsubmit="return submitCareplasmaForm(event, this, { subject: 'New Inquiry — Choose Center Page', fromName: 'CarePlasma Website — Choose Center' });">
+        <input type="text" name="_honey" value="" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
         <div class="form-row">
-          <input type="text" placeholder="Name*" required>
-          <input type="email" placeholder="Email*" required>
+          <input type="text" name="name" placeholder="Name*" required>
+          <input type="email" name="email" placeholder="Email*" required>
         </div>
         <div class="form-full">
-          <input type="tel" placeholder="Phone*" required>
+          <input type="tel" name="phone" placeholder="Phone*" required>
         </div>
         <div class="form-full">
-          <textarea rows="4" placeholder="How can we help?"></textarea>
+          <textarea rows="4" name="message" placeholder="How can we help?"></textarea>
         </div>
         <button class="btn btn-primary" type="submit" style="width:100%;">Send Message</button>
-        <p class="form-status" style="display:none;color:var(--sky);font-size:13.5px;margin-top:12px;">Thanks — we'll be in touch shortly.</p>
+        <p class="form-status" data-success-text="Thanks — we'll be in touch shortly." style="display:none;color:var(--sky);font-size:13.5px;margin-top:12px;">Thanks — we'll be in touch shortly.</p>
         <p style="font-size:12px;color:var(--ink-soft);margin-top:14px;">Protected by reCAPTCHA. Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="text-decoration:underline;">Privacy Policy</a> &amp; <a href="https://policies.google.com/terms" target="_blank" rel="noopener" style="text-decoration:underline;">Terms</a> apply.</p>
       </form>
     </div>
@@ -1759,7 +1764,7 @@ nav.primary a.active{color:var(--coral-deep);}
         <li><a href="#compensation" data-nav="compensation" onclick="showPage('compensation');return false;">Compensation</a></li>
         <li><a href="#rewards" data-nav="rewards" onclick="showPage('rewards');return false;">Rewards Program</a></li>
         <li><a href="#eligibility" data-nav="eligibility" onclick="showPage('eligibility');return false;">Eligibility</a></li>
-        <li><a href="#about" data-nav="about" onclick="showPage('about');return false;">About Us</a></li>
+        <li><a href="about-us.html">About Us</a></li>
       </ul>
     </div>
     <div>
@@ -1818,6 +1823,55 @@ nav.primary a.active{color:var(--coral-deep);}
     <span class="chat-ping"></span>
   </button>
 </div>
+
+<script>
+  var CAREPLASMA_MAILER_ENDPOINT = "https://careplasma-mailer-api.venkatrx1.workers.dev";
+
+  function submitCareplasmaForm(event, form, opts) {
+    event.preventDefault();
+    opts = opts || {};
+    var formData = new FormData(form);
+    if (opts.beforeSend) opts.beforeSend(formData, form);
+    if (opts.subject) formData.set('_subject', opts.subject);
+    if (opts.fromName) formData.set('_from_name', opts.fromName);
+
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var statusEl = form.querySelector('.form-status');
+    var originalBtnText = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+    if (statusEl) { statusEl.style.display = 'none'; }
+
+    fetch(CAREPLASMA_MAILER_ENDPOINT, { method: 'POST', body: formData })
+      .then(function(res) {
+        return res.json().catch(function(){ return { success: res.ok }; });
+      })
+      .then(function(data) {
+        if (!data.success) throw new Error(data.message || 'Could not send your message.');
+        if (opts.onSuccess) {
+          opts.onSuccess(form);
+        } else if (statusEl) {
+          statusEl.textContent = statusEl.getAttribute('data-success-text') || statusEl.textContent;
+          statusEl.style.color = 'var(--sky)';
+          statusEl.style.display = 'block';
+          form.reset();
+        }
+      })
+      .catch(function(err) {
+        if (statusEl) {
+          statusEl.textContent = (err && err.message) || 'Sorry, something went wrong. Please call us instead.';
+          statusEl.style.color = 'crimson';
+          statusEl.style.display = 'block';
+        } else {
+          alert((err && err.message) || 'Sorry, something went wrong. Please call us instead.');
+        }
+      })
+      .finally(function() {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalBtnText; }
+      });
+
+    return false;
+  }
+</script>
 
 <script>
 (function(){

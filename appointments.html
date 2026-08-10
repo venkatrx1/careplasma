@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book an Appointment | Care Plasma — Care to Cure</title>
+<meta name="description" content="Schedule your plasma donation appointment at Care Plasma, 1400 5th Avenue, New York City. Earn up to $500 your first month.">
+<link rel="icon" href="https://www.appointments.careplasma.com/wp-content/uploads/2024/06/favicon-32x32-1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ── DESIGN TOKENS (same as index.html) ── */
+:root{
+  --ink:#123C54;
+  --ink-soft:#1C5573;
+  --cream:#FFFFFF;
+  --cream-deep:#F4F5F7;
+  --gold:#F0A93B;
+  --gold-deep:#D97F1F;
+  --gold-pale:#FCE2B0;
+  --coral:#E2543F;
+  --coral-deep:#C2402D;
+  --sky:#2E86AB;
+  --white:#FFFFFF;
+  --line:rgba(18,60,84,0.12);
+  --shadow:0 20px 50px -20px rgba(18,60,84,0.35);
+  --radius:22px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3,h4{
+  font-family:'Fraunces',serif;
+  line-height:1.08;
+  margin:0;
+  font-weight:600;
+  letter-spacing:-0.015em;
+  color:var(--ink);
+}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12.5px;
+  font-weight:700;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--coral-deep);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.eyebrow::before{
+  content:"";
+  width:7px;height:7px;border-radius:50%;
+  background:var(--coral);
+  display:inline-block;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:60;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(18,60,84,0.1);
+}
+.nav-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;max-width:1180px;margin:0 auto;
+  gap:20px;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-logo-full{
+  height:68px;width:auto;
+  background:transparent;
+  padding:0;border-radius:0;box-shadow:none;
+}
+nav.primary{display:flex;align-items:center;gap:28px;}
+nav.primary a{
+  font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:var(--ink-soft);
+  text-transform:uppercase;letter-spacing:0.08em;
+  position:relative;padding:6px 0;
+}
+nav.primary a:hover,nav.primary a.active{color:var(--coral-deep);}
+.nav-cta{display:flex;align-items:center;gap:14px;}
+.phone-pill{
+  display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;
+  color:var(--ink);white-space:nowrap;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 24px;border-radius:100px;
+  font-weight:700;font-size:14.5px;
+  border:2px solid transparent;cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease;
+  white-space:nowrap;font-family:'Inter',sans-serif;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--coral),var(--coral-deep));
+  color:var(--white);
+  box-shadow:0 10px 24px -8px rgba(226,84,63,0.55);
+  text-decoration:none;
+}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+  color:var(--ink);
+  box-shadow:0 10px 24px -8px rgba(217,127,31,0.55);
+  text-decoration:none;
+}
+.menu-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--ink);font-size:22px;padding:4px;}
+.mobile-nav{display:none;flex-direction:column;gap:0;background:#fff;border-top:1px solid var(--line);}
+.mobile-nav a{padding:14px 24px;font-family:'Manrope',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-soft);border-bottom:1px solid var(--line);}
+.mobile-nav a:hover{color:var(--coral-deep);}
+.mobile-nav.open{display:flex;}
+
+/* ── HERO BAND ── */
+.appt-hero{
+  background:linear-gradient(135deg,var(--ink) 0%,var(--ink-soft) 100%);
+  color:var(--cream);
+  padding:60px 24px 56px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.appt-hero::before{
+  content:"";position:absolute;top:-80px;right:-80px;
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,169,59,0.35),transparent 70%);
+  pointer-events:none;
+}
+.appt-hero::after{
+  content:"";position:absolute;bottom:-60px;left:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(226,84,63,0.25),transparent 70%);
+  pointer-events:none;
+}
+.appt-hero .eyebrow{color:var(--gold);position:relative;z-index:1;}
+.appt-hero .eyebrow::before{background:var(--gold);}
+.appt-hero h1{
+  font-size:clamp(28px,4vw,48px);
+  color:var(--cream);
+  margin:14px 0 14px;
+  font-weight:700;
+  position:relative;z-index:1;
+}
+.appt-hero p{
+  font-size:16px;
+  color:rgba(255,255,255,0.8);
+  max-width:520px;
+  margin:0 auto 28px;
+  position:relative;z-index:1;
+}
+.hero-pills{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  position:relative;z-index:1;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.22);
+  border-radius:100px;padding:8px 18px;
+  font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+  color:rgba(255,255,255,0.9);letter-spacing:0.06em;
+}
+.pill-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);}
+
+/* ── BOOKING SECTION WRAPPER ── */
+.booking-outer{
+  background:var(--cream-deep);
+  padding:64px 24px 80px;
+}
+.booking-inner{
+  max-width:1140px;
+  margin:0 auto;
+}
+.booking-section-label{
+  text-align:center;
+  margin-bottom:40px;
+}
+.booking-section-label .eyebrow{
+  color:var(--coral-deep);margin-bottom:12px;
+}
+.booking-section-label h2{
+  font-size:clamp(22px,3vw,36px);
+  font-weight:700;color:var(--ink);
+  margin-bottom:10px;
+}
+.booking-section-label p{
+  font-size:15px;color:var(--ink-soft);
+  max-width:520px;margin:0 auto;
+}
+
+/* ── TWO-COLUMN LAYOUT ── */
+.booking-layout{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  border-radius:28px;
+  border:1px solid var(--line);
+  box-shadow:0 40px 100px -40px rgba(18,60,84,0.32);
+  overflow:hidden;
+  background:var(--white);
+}
+
+/* ── LEFT SIDEBAR ── */
+.booking-sidebar{
+  background:linear-gradient(160deg,var(--ink) 0%,var(--ink-soft) 100%);
+  padding:40px 30px 40px;
+  display:flex;
+  flex-direction:column;
+  gap:32px;
+  position:relative;
+  overflow:hidden;
+}
+.booking-sidebar::before{
+  content:"";position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,169,59,0.25),transparent 70%);
+  pointer-events:none;
+}
+.booking-sidebar::after{
+  content:"";position:absolute;bottom:-40px;left:-40px;
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(226,84,63,0.18),transparent 70%);
+  pointer-events:none;
+}
+.sb-header{position:relative;z-index:1;}
+.sb-header h3{
+  font-family:'Fraunces',serif;
+  font-size:22px;font-weight:700;
+  color:#fff;margin:0 0 8px;
+  letter-spacing:-0.01em;
+}
+.sb-header p{
+  font-size:13.5px;
+  color:rgba(255,255,255,0.65);
+  line-height:1.6;margin:0;
+}
+.sb-divider{
+  height:1px;
+  background:rgba(255,255,255,0.12);
+  margin:0;
+  position:relative;z-index:1;
+}
+/* Steps */
+.sb-steps{
+  display:flex;flex-direction:column;gap:20px;
+  position:relative;z-index:1;
+}
+.sb-step{
+  display:flex;gap:14px;align-items:flex-start;
+}
+.sb-step-num{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:rgba(240,169,59,0.2);
+  border:1px solid rgba(240,169,59,0.45);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--gold);
+  margin-top:1px;
+}
+.sb-step-text strong{
+  display:block;font-size:13.5px;font-weight:700;
+  color:#fff;margin-bottom:3px;
+  font-family:'Inter',sans-serif;
+}
+.sb-step-text span{
+  font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5;
+}
+/* What to bring */
+.sb-bring{position:relative;z-index:1;}
+.sb-bring h5{
+  font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 12px;
+}
+.sb-bring ul{
+  list-style:none;padding:0;margin:0;
+  display:flex;flex-direction:column;gap:9px;
+}
+.sb-bring li{
+  font-size:12.5px;color:rgba(255,255,255,0.7);
+  display:flex;gap:9px;align-items:center;
+}
+.sb-bring li::before{
+  content:"✓";
+  font-size:11px;font-weight:700;
+  color:var(--gold);
+  width:18px;height:18px;border-radius:50%;
+  background:rgba(240,169,59,0.15);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+/* Contact block */
+.sb-contact{position:relative;z-index:1;}
+.sb-contact h5{
+  font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 12px;
+}
+.sb-contact-item{
+  display:flex;gap:10px;align-items:flex-start;
+  margin-bottom:10px;
+}
+.sb-contact-item:last-child{margin-bottom:0;}
+.sb-contact-icon{
+  font-size:14px;margin-top:1px;flex-shrink:0;
+  width:24px;text-align:center;
+}
+.sb-contact-text{
+  font-size:12.5px;color:rgba(255,255,255,0.7);
+  line-height:1.55;
+}
+.sb-contact-text a{color:rgba(255,255,255,0.85);text-decoration:none;}
+.sb-contact-text a:hover{color:var(--gold);}
+
+/* ── RIGHT: BOOKING WIDGET ── */
+.booking-main{
+  background:var(--white);
+  position:relative;
+  min-height:860px;
+}
+.booking-widget-wrap{
+  position:relative;
+  overflow:hidden;
+  height:1000px;
+}
+.booking-widget-wrap iframe{
+  width:100%;
+  height:calc(1000px + 120px);
+  margin-top:-120px;
+  border:none;
+  display:block;
+}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);color:rgba(251,246,236,0.8);padding:64px 0 26px;margin-top:40px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr 1fr;gap:40px;}
+.foot-brand{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.foot-logo-full{
+  height:36px;width:auto;
+  background:#FFFFFF;
+  padding:10px 16px;
+  border-radius:10px;
+}
+footer h5{color:var(--white);font-family:'Inter',sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;margin-top:0;}
+footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:14px;}
+footer ul a:hover{color:var(--gold);}
+.foot-bottom{
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  border-top:1px solid rgba(251,246,236,0.15);margin-top:50px;padding-top:22px;
+  font-size:13px;color:rgba(251,246,236,0.55);
+}
+.social-row{display:flex;gap:12px;margin-top:6px;}
+.social-row a{
+  width:38px;height:38px;border-radius:50%;background:rgba(251,246,236,0.1);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .18s ease,transform .18s ease;
+}
+.social-row a svg{width:18px;height:18px;fill:currentColor;color:rgba(251,246,236,0.9);}
+.social-row a:hover{background:var(--gold);transform:translateY(-2px);}
+.social-row a:hover svg{color:var(--ink);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .booking-layout{grid-template-columns:1fr;}
+  .booking-sidebar{padding:32px 28px;}
+  .sb-steps{gap:16px;}
+}
+@media(max-width:860px){
+  nav.primary,.phone-pill{display:none;}
+  .menu-toggle{display:block;}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:30px;}
+}
+@media(max-width:560px){
+  .foot-grid{grid-template-columns:1fr;}
+  .booking-outer{padding:44px 16px 60px;}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="nav-row">
+    <a href="index.html" class="brand">
+      <img id="headerLogo" src="https://www.appointments.careplasma.com/wp-content/uploads/2024/04/CARE-PLASMA-Logo-6.png" alt="Care Plasma — Care To Cure" class="brand-logo-full">
+    </a>
+    <nav class="primary">
+      <a href="index.html">Home</a>
+      <a href="index.html#eligibility">Eligibility</a>
+      <a href="index.html#compensation">Compensation</a>
+      <a href="index.html#find-us">Choose Center</a>
+      <a href="index.html#faqs">FAQs</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="phone-pill" href="tel:+12129969500">📞 212.996.9500</a>
+      <a class="btn btn-primary" href="index.html#eligibility">Check Eligibility</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">☰</button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="index.html#eligibility">Eligibility</a>
+    <a href="index.html#compensation">Compensation</a>
+    <a href="index.html#find-us">Choose Center</a>
+    <a href="index.html#faqs">FAQs</a>
+    <a href="tel:+12129969500">📞 212.996.9500</a>
+  </nav>
+</header>
+
+<!-- ── HERO ── -->
+<section class="appt-hero">
+  <span class="eyebrow">Care Plasma · NYC</span>
+  <h1>Book an Appointment</h1>
+  <p>Pick a time that works for you. Your first donation could earn you up to <strong style="color:var(--gold);">$100</strong> — and up to <strong style="color:var(--gold);">$500</strong> your first month.</p>
+  <div class="hero-pills">
+    <span class="pill"><span class="pill-dot"></span>1400 5th Avenue, New York, NY 10026</span>
+    <span class="pill"><span class="pill-dot"></span>Mon–Sat · Walk-ins Welcome</span>
+    <span class="pill"><span class="pill-dot"></span>~60 min per visit</span>
+  </div>
+</section>
+
+<!-- ── BOOKING SECTION ── -->
+<div class="booking-outer">
+  <div class="booking-inner">
+
+    <!-- Section label -->
+    <div class="booking-section-label">
+      <span class="eyebrow">Schedule · Care Plasma NYC</span>
+      <h2>Book Your Appointment</h2>
+      <p>Choose a convenient time online. Walk-ins are also welcome during regular center hours.</p>
+    </div>
+
+    <!-- Two-column layout -->
+    <div class="booking-layout">
+
+      <!-- LEFT SIDEBAR -->
+      <aside class="booking-sidebar">
+
+        <div class="sb-header">
+          <h3>Plasma Donation<br>Made Simple</h3>
+          <p>Your first visit could earn you up to <strong style="color:var(--gold);">$100</strong> — and up to <strong style="color:var(--gold);">$500</strong> in your first month.</p>
+        </div>
+
+        <div class="sb-divider"></div>
+
+        <!-- Steps -->
+        <div class="sb-steps">
+          <div class="sb-step">
+            <div class="sb-step-num">01</div>
+            <div class="sb-step-text">
+              <strong>Pick a Date &amp; Time</strong>
+              <span>Select the appointment type and a slot that works for you.</span>
+            </div>
+          </div>
+          <div class="sb-step">
+            <div class="sb-step-num">02</div>
+            <div class="sb-step-text">
+              <strong>Enter Your Details</strong>
+              <span>Provide your name, age, and contact information to confirm.</span>
+            </div>
+          </div>
+          <div class="sb-step">
+            <div class="sb-step-num">03</div>
+            <div class="sb-step-text">
+              <strong>Arrive &amp; Donate</strong>
+              <span>Bring your documents and get paid the same day via Paysign Visa®.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sb-divider"></div>
+
+        <!-- What to bring -->
+        <div class="sb-bring">
+          <h5>What to Bring</h5>
+          <ul>
+            <li>Government-issued photo ID</li>
+            <li>Proof of address (utility bill)</li>
+            <li>Social Security card or W-2</li>
+          </ul>
+        </div>
+
+        <div class="sb-divider"></div>
+
+        <!-- Contact -->
+        <div class="sb-contact">
+          <h5>Center Info</h5>
+          <div class="sb-contact-item">
+            <span class="sb-contact-icon">📍</span>
+            <span class="sb-contact-text">1400 5th Avenue<br>New York, NY 10026</span>
+          </div>
+          <div class="sb-contact-item">
+            <span class="sb-contact-icon">📞</span>
+            <span class="sb-contact-text"><a href="tel:+12129969500">212.996.9500</a></span>
+          </div>
+          <div class="sb-contact-item">
+            <span class="sb-contact-icon">🕐</span>
+            <span class="sb-contact-text">Mon – Sat · Walk-ins Welcome<br>~60 min per return visit</span>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- RIGHT: BOOKING WIDGET -->
+      <div class="booking-main">
+        <div class="booking-widget-wrap">
+          <iframe
+            id="ssaBookingFrame"
+            src="https://www.appointments.careplasma.com/"
+            title="Book a Plasma Donation Appointment"
+            allowtransparency="true"
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+
+    </div><!-- /booking-layout -->
+  </div><!-- /booking-inner -->
+</div><!-- /booking-outer -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-brand">
+        <img id="footerLogo" src="https://www.appointments.careplasma.com/wp-content/uploads/2024/04/CARE-PLASMA-Logo-6.png" alt="Care Plasma — Care To Cure" class="foot-logo-full">
+      </div>
+      <p style="max-width:280px;font-size:14px;">A New York City plasma donation center helping patients access life-saving therapies — one donation at a time.</p>
+      <div class="social-row">
+        <a href="https://www.facebook.com/105602942465474" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/careplasmanyc/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.76 1.15.55.54.9 1.1 1.15 1.76.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.76c-.54.55-1.1.9-1.76 1.15-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.76-1.15 4.9 4.9 0 0 1-1.15-1.76c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.76a4.9 4.9 0 0 1 1.76-1.15c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.28 2 12 2Zm0 3.8A6.2 6.2 0 1 0 12 18.2 6.2 6.2 0 0 0 12 5.8Zm0 2.16a4.04 4.04 0 1 1 0 8.08 4.04 4.04 0 0 1 0-8.08Zm6.4-3.5a1.44 1.44 0 1 1 0 2.88 1.44 1.44 0 0 1 0-2.88Z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h5>Explore</h5>
+      <ul>
+        <li><a href="index.html#plasma">What Is Plasma</a></li>
+        <li><a href="index.html#compensation">Compensation</a></li>
+        <li><a href="index.html#rewards">Rewards Program</a></li>
+        <li><a href="index.html#eligibility">Eligibility</a></li>
+        <li><a href="index.html#about">About Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Company</h5>
+      <ul>
+        <li><a href="index.html#faqs">FAQs</a></li>
+        <li><a href="index.html#careers">Careers</a></li>
+        <li><a href="index.html#find-us">Visit Us</a></li>
+        <li><a href="mailto:info@careplasma.com">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Contact</h5>
+      <ul>
+        <li>1400 5th Avenue<br>New York, NY 10026</li>
+        <li><a href="tel:+12129969500">212.996.9500</a></li>
+        <li><a href="mailto:info@careplasma.com">info@careplasma.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 Care Plasma LLC. All rights reserved.</span>
+    <span>1400 5th Avenue, New York, NY 10026 · 212.996.9500</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* Mobile nav toggle */
+  var toggle = document.getElementById('menuToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  toggle.addEventListener('click', function(){
+    var open = mobileNav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+    toggle.textContent = open ? '✕' : '☰';
+  });
+
+  /* Auto-expand iframe to show all booking steps */
+  var frame = document.getElementById('ssaBookingFrame');
+  var wrap  = frame ? frame.parentElement : null;      /* .booking-widget-wrap */
+  var main  = wrap  ? wrap.parentElement  : null;      /* .booking-main */
+  var CLIP  = 120; /* px clipped from top to hide internal logo header */
+
+  function setH(contentH){
+    var iframeH = Math.max(1000 + CLIP, contentH + CLIP + 80);
+    var wrapH   = iframeH - CLIP;
+    frame.style.height = iframeH + 'px';
+    if(wrap) wrap.style.height = wrapH + 'px';
+    if(main) main.style.minHeight = wrapH + 'px';
+  }
+
+  /* Listen for SSA postMessage resize events */
+  window.addEventListener('message', function(e){
+    if(!frame) return;
+    if(e.data && e.data.type === 'ssa-resize' && e.data.height){ setH(e.data.height); }
+    if(e.data && typeof e.data === 'object' && e.data.height && e.data.height > 200){ setH(e.data.height); }
+  });
+
+  /* Fallback: poll iframe content height every 600ms while same-origin allows it */
+  function tryExpand(){
+    try {
+      var doc = frame.contentDocument || frame.contentWindow.document;
+      var h = doc.body ? doc.body.scrollHeight : 0;
+      if(h > 200) setH(h);
+    } catch(err){ /* cross-origin — rely on postMessage only */ }
+  }
+  setInterval(tryExpand, 600);
+})();
+</script>
+</body>
+</html>

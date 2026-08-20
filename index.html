@@ -343,6 +343,16 @@
   }
   .doc-item h4{font-size:15px;margin-bottom:4px;font-weight:600;}
   .doc-item p{margin:0;font-size:13.8px;color:var(--ink-soft);}
+  .doc-item.id-proof-item{cursor:pointer;}
+  .doc-item.id-proof-item:hover{border-color:var(--gold);}
+  .id-proof-link{color:var(--coral-deep);font-weight:600;text-decoration:underline;margin-left:4px;white-space:nowrap;}
+  .id-proof-caret{display:inline-block;font-size:12px;color:var(--ink-soft);margin-left:4px;transition:transform .2s ease;}
+  .id-proof-item.open .id-proof-caret{transform:rotate(180deg);}
+  .id-proof-wrap{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .id-proof-item.open .id-proof-wrap{max-height:480px;}
+  .id-proof-list{list-style:none;margin:10px 0 0;padding:10px 14px;background:var(--gold-pale);border-radius:10px;}
+  .id-proof-list li{padding:5px 0;font-size:13.4px;color:var(--ink-soft);border-bottom:1px dashed var(--line);}
+  .id-proof-list li:last-child{border-bottom:none;}
 
   .crit-grid{display:flex;flex-direction:column;gap:16px;}
   .crit-card{
@@ -525,7 +535,7 @@
     display:flex;flex-direction:column;gap:10px;background:var(--cream);
   }
   .msg{
-    max-width:82%;padding:10px 14px;border-radius:14px;font-size:13.8px;line-height:1.45;
+    max-width:82%;padding:10px 14px;border-radius:14px;font-size:13.8px;line-height:1.45; white-space:pre-line;
   }
   .msg.bot{background:var(--white);border:1px solid var(--line);color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px;}
   .msg.user{background:linear-gradient(135deg,var(--sky),#1F5F7E);color:var(--white);align-self:flex-end;border-bottom-right-radius:4px;}
@@ -839,7 +849,7 @@ nav.primary a.active{color:var(--coral-deep);}
       <a href="#home" data-nav="home" onclick="showPage('home');return false;" class="active">Home</a>
       <a href="#eligibility" data-nav="eligibility" onclick="showPage('eligibility');return false;">Eligibility</a>
       <a href="#compensation" data-nav="compensation" onclick="showPage('compensation');return false;">Compensation</a>
-      <a href="https://careplasma-appointments.pages.dev" target="_blank" rel="noopener">Appointments</a>
+      <a href="https://careplasma-appointments.pages.dev">Appointments</a>
       <a href="#contact" onclick="showPage('home');setTimeout(function(){document.getElementById('contact').scrollIntoView({behavior:'smooth'})},80);return false;">Contact Us</a>
       <div class="nav-dropdown" tabindex="0">
         <span class="dropdown-trigger">More</span>
@@ -897,14 +907,14 @@ nav.primary a.active{color:var(--coral-deep);}
     </div>
   </section>
 
-<section style="background:var(--cream-deep);padding:32px 0;">
-  <div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-    <a href="#process" style="display:flex;align-items:center;justify-content:center;gap:16px;background:linear-gradient(135deg,var(--coral),var(--coral-deep));color:#fff;border-radius:16px;padding:28px 36px;font-family:JetBrains Mono,monospace;font-weight:700;font-size:15px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;box-shadow:0 10px 28px -10px rgba(226,84,63,0.5);transition:transform .18s ease;">
-      <span style="font-size:24px;">🩸</span>
+<section style="background:var(--cream-deep);padding:20px 0;">
+  <div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:720px;">
+    <a href="#process" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--coral),var(--coral-deep));color:#fff;border-radius:12px;padding:14px 20px;font-family:JetBrains Mono,monospace;font-weight:700;font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;box-shadow:0 8px 20px -10px rgba(226,84,63,0.5);transition:transform .18s ease;">
+      <span style="font-size:17px;">🩸</span>
       <span>The Plasma Donation Process</span>
     </a>
-    <a href="#post-donation" style="display:flex;align-items:center;justify-content:center;gap:16px;background:linear-gradient(135deg,var(--sky),#1F5F7E);color:#fff;border-radius:16px;padding:28px 36px;font-family:JetBrains Mono,monospace;font-weight:700;font-size:15px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;box-shadow:0 10px 28px -10px rgba(46,134,171,0.5);transition:transform .18s ease;">
-      <span style="font-size:24px;">💊</span>
+    <a href="#post-donation" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--sky),#1F5F7E);color:#fff;border-radius:12px;padding:14px 20px;font-family:JetBrains Mono,monospace;font-weight:700;font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;box-shadow:0 8px 20px -10px rgba(46,134,171,0.5);transition:transform .18s ease;">
+      <span style="font-size:17px;">💊</span>
       <span>Post Donation Tips</span>
     </a>
   </div>
@@ -1299,17 +1309,53 @@ nav.primary a.active{color:var(--coral-deep);}
         <span class="eyebrow">Before Your First Visit</span>
         <h2 style="margin:14px 0 20px;font-size:32px;">Required documents</h2>
         <div class="doc-list">
-          <div class="doc-item">
+          <div class="doc-item id-proof-item" role="button" tabindex="0" aria-expanded="false" onclick="this.classList.toggle('open');this.setAttribute('aria-expanded',this.classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
             <div class="ic">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2.1"/><line x1="13" y1="10" x2="19" y2="10"/><line x1="13" y1="13" x2="19" y2="13"/><line x1="5" y1="16.3" x2="11" y2="16.3"/></svg>
             </div>
-            <div><h4>Government-issued photo ID</h4><p>A valid driver's license or equivalent.</p></div>
+            <div>
+              <h4>Government-issued photo ID <span class="id-proof-caret">▾</span></h4>
+              <p>A valid driver's license or equivalent. <span class="id-proof-link">See accepted IDs</span></p>
+              <div class="id-proof-wrap">
+                <ul class="id-proof-list">
+                  <li>U.S. Driver's License with photo</li>
+                  <li>State-issued photo ID</li>
+                  <li>U.S. Passport</li>
+                  <li>Foreign Passport</li>
+                  <li>Permanent Resident Card / Green Card</li>
+                  <li>Military ID</li>
+                  <li>Employee ID with photo</li>
+                  <li>Student ID with photo</li>
+                  <li>American Red Cross Donor Card</li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="doc-item">
+          <div class="doc-item id-proof-item" role="button" tabindex="0" aria-expanded="false" onclick="this.classList.toggle('open');this.setAttribute('aria-expanded',this.classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
             <div class="ic">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
             </div>
-            <div><h4>Proof of address</h4><p>A recent utility bill or comparable document.</p></div>
+            <div>
+              <h4>Proof of address <span class="id-proof-caret">▾</span></h4>
+              <p>A recent utility bill or comparable document. <span class="id-proof-link">See accepted documents</span></p>
+              <div class="id-proof-wrap">
+                <ul class="id-proof-list">
+                  <li>Driver's License / State ID</li>
+                  <li>Utility Bill</li>
+                  <li>Bank Statement</li>
+                  <li>Credit Card Statement</li>
+                  <li>Mortgage Statement</li>
+                  <li>Lease / Rental Agreement</li>
+                  <li>Property Tax Statement</li>
+                  <li>Insurance Document</li>
+                  <li>Pay Stub</li>
+                  <li>Vehicle Registration</li>
+                  <li>Voter Registration</li>
+                  <li>Government Correspondence</li>
+                  <li>School/College Document</li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div class="doc-item">
             <div class="ic">
@@ -1811,6 +1857,8 @@ nav.primary a.active{color:var(--coral-deep);}
       <div class="quick-replies" id="quickReplies">
         <button class="qr" data-topic="eligibility">Am I eligible?</button>
         <button class="qr" data-topic="compensation">How much do I earn?</button>
+        <button class="qr" data-topic="idproof">Valid ID proof?</button>
+        <button class="qr" data-topic="address">Proof of address?</button>
         <button class="qr" data-topic="human">Talk to a person</button>
       </div>
     </div>
@@ -1890,6 +1938,8 @@ nav.primary a.active{color:var(--coral-deep);}
     eligibility: "Most donors qualify if they're 18+, at least 110 lbs, in good health, and can bring a photo ID, proof of address, and proof of Social Security. Want the full checklist?",
     compensation: "New donors can earn up to $500 in their first month, paid to a reloadable Paysign Visa card after every successful donation.",
     visit: "We're at 1400 5th Avenue, New York, NY 10026, open Monday–Saturday 7:00 AM–3:00 PM (closed Sunday). Walk-ins are welcome, or call ahead to line up your first visit.",
+    idproof: "Any of these work as valid photo ID:\n• U.S. Driver's License with photo\n• State-issued photo ID\n• U.S. Passport\n• Foreign Passport\n• Permanent Resident Card / Green Card\n• Military ID\n• Employee ID with photo\n• Student ID with photo\n• American Red Cross Donor Card",
+    address: "Any of these work as proof of address:\n• Driver's License / State ID\n• Utility Bill\n• Bank Statement\n• Credit Card Statement\n• Mortgage Statement\n• Lease / Rental Agreement\n• Property Tax Statement\n• Insurance Document\n• Pay Stub\n• Vehicle Registration\n• Voter Registration\n• Government Correspondence\n• School/College Document",
     human: "Of course — call our team directly at 212.996.9500 or email info@careplasma.com and we'll take it from here."
   };
 

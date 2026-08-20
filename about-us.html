@@ -837,7 +837,14 @@ nav.primary a.active{color:var(--coral-deep);}
   var form = document.getElementById('chatForm');
   var input = document.getElementById('chatInput');
   var icon = document.getElementById('chatBubbleIcon');
-  var quickReplies = document.getElementById('quickReplies');
+  var topics = [
+    { topic: 'eligibility', label: 'Am I eligible?' },
+    { topic: 'compensation', label: 'How much do I earn?' },
+    { topic: 'idproof', label: 'Valid ID proof?' },
+    { topic: 'address', label: 'Proof of address?' },
+    { topic: 'visit', label: 'Book a visit' },
+    { topic: 'human', label: 'Talk to a person' }
+  ];
 
   var answers = {
     eligibility: "Most donors qualify if they're 18+, at least 110 lbs, in good health, and can bring a photo ID, proof of address, and proof of Social Security. Want the full checklist?",
@@ -852,6 +859,22 @@ nav.primary a.active{color:var(--coral-deep);}
     var div = document.createElement('div');
     div.className = 'msg ' + from;
     div.textContent = text;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function addQuickReplies(){
+    var existing = body.querySelectorAll('.quick-replies');
+    if(existing.length) existing[existing.length - 1].remove();
+    var div = document.createElement('div');
+    div.className = 'quick-replies';
+    topics.forEach(function(t){
+      var btn = document.createElement('button');
+      btn.className = 'qr';
+      btn.dataset.topic = t.topic;
+      btn.textContent = t.label;
+      div.appendChild(btn);
+    });
     body.appendChild(div);
     body.scrollTop = body.scrollHeight;
   }
@@ -873,11 +896,14 @@ nav.primary a.active{color:var(--coral-deep);}
   });
   closeBtn.addEventListener('click', closeChat);
 
-  quickReplies.addEventListener('click', function(e){
+  body.addEventListener('click', function(e){
     var btn = e.target.closest('.qr');
     if(!btn) return;
     addMessage(btn.textContent, 'user');
-    setTimeout(function(){ addMessage(answers[btn.dataset.topic], 'bot'); }, 450);
+    setTimeout(function(){
+      addMessage(answers[btn.dataset.topic], 'bot');
+      addQuickReplies();
+    }, 450);
   });
 
   form.addEventListener('submit', function(e){
@@ -888,6 +914,7 @@ nav.primary a.active{color:var(--coral-deep);}
     input.value = '';
     setTimeout(function(){
       addMessage("Thanks — a member of our Care Plasma team will follow up shortly. For anything urgent, call 212.996.9500.", 'bot');
+      addQuickReplies();
     }, 500);
   });
 })();

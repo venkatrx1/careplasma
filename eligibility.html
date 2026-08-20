@@ -340,6 +340,16 @@
   }
   .doc-item h4{font-size:15px;margin-bottom:4px;font-weight:600;}
   .doc-item p{margin:0;font-size:13.8px;color:var(--ink-soft);}
+  .doc-item.id-proof-item{cursor:pointer;}
+  .doc-item.id-proof-item:hover{border-color:var(--gold);}
+  .id-proof-link{color:var(--coral-deep);font-weight:600;text-decoration:underline;margin-left:4px;white-space:nowrap;}
+  .id-proof-caret{display:inline-block;font-size:12px;color:var(--ink-soft);margin-left:4px;transition:transform .2s ease;}
+  .id-proof-item.open .id-proof-caret{transform:rotate(180deg);}
+  .id-proof-wrap{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .id-proof-item.open .id-proof-wrap{max-height:340px;}
+  .id-proof-list{list-style:none;margin:10px 0 0;padding:10px 14px;background:var(--gold-pale);border-radius:10px;}
+  .id-proof-list li{padding:5px 0;font-size:13.4px;color:var(--ink-soft);border-bottom:1px dashed var(--line);}
+  .id-proof-list li:last-child{border-bottom:none;}
 
   .crit-grid{display:flex;flex-direction:column;gap:16px;}
   .crit-card{
@@ -725,11 +735,27 @@ nav.primary a.active{color:var(--coral-deep);}
         <span class="eyebrow">Before Your First Visit</span>
         <h2 style="margin:14px 0 20px;font-size:32px;">Required documents</h2>
         <div class="doc-list">
-          <div class="doc-item">
+          <div class="doc-item id-proof-item" role="button" tabindex="0" aria-expanded="false" onclick="this.classList.toggle('open');this.setAttribute('aria-expanded',this.classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
             <div class="ic">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2.1"/><line x1="13" y1="10" x2="19" y2="10"/><line x1="13" y1="13" x2="19" y2="13"/><line x1="5" y1="16.3" x2="11" y2="16.3"/></svg>
             </div>
-            <div><h4>Government-issued photo ID</h4><p>A valid driver's license or equivalent.</p></div>
+            <div>
+              <h4>Government-issued photo ID <span class="id-proof-caret">▾</span></h4>
+              <p>A valid driver's license or equivalent. <span class="id-proof-link">See accepted IDs</span></p>
+              <div class="id-proof-wrap">
+                <ul class="id-proof-list">
+                  <li>U.S. Driver's License with photo</li>
+                  <li>State-issued photo ID</li>
+                  <li>U.S. Passport</li>
+                  <li>Foreign Passport</li>
+                  <li>Permanent Resident Card / Green Card</li>
+                  <li>Military ID</li>
+                  <li>Employee ID with photo</li>
+                  <li>Student ID with photo</li>
+                  <li>American Red Cross Donor Card</li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div class="doc-item">
             <div class="ic">

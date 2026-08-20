@@ -522,7 +522,7 @@
     display:flex;flex-direction:column;gap:10px;background:var(--cream);
   }
   .msg{
-    max-width:82%;padding:10px 14px;border-radius:14px;font-size:13.8px;line-height:1.45;
+    max-width:82%;padding:10px 14px;border-radius:14px;font-size:13.8px;line-height:1.45; white-space:pre-line;
   }
   .msg.bot{background:var(--white);border:1px solid var(--line);color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px;}
   .msg.user{background:linear-gradient(135deg,var(--sky),#1F5F7E);color:var(--white);align-self:flex-end;border-bottom-right-radius:4px;}
@@ -868,6 +868,8 @@ nav.primary a.active{color:var(--coral-deep);}
       <div class="quick-replies" id="quickReplies">
         <button class="qr" data-topic="eligibility">Am I eligible?</button>
         <button class="qr" data-topic="compensation">How much do I earn?</button>
+        <button class="qr" data-topic="idproof">Valid ID proof?</button>
+        <button class="qr" data-topic="address">Proof of address?</button>
         <button class="qr" data-topic="visit">Book a visit</button>
         <button class="qr" data-topic="human">Talk to a person</button>
       </div>
@@ -899,6 +901,8 @@ nav.primary a.active{color:var(--coral-deep);}
     eligibility: "Most donors qualify if they're 18+, at least 110 lbs, in good health, and can bring a photo ID, proof of address, and proof of Social Security. Want the full checklist?",
     compensation: "New donors can earn up to $500 in their first month, paid to a reloadable Paysign Visa card after every successful donation.",
     visit: "We're at 1400 5th Avenue, New York, NY 10026, open Monday–Saturday 7:00 AM–3:00 PM (closed Sunday). Walk-ins are welcome, or call ahead to line up your first visit.",
+    idproof: "Any of these work as valid photo ID:\n• U.S. Driver's License with photo\n• State-issued photo ID\n• U.S. Passport\n• Foreign Passport\n• Permanent Resident Card / Green Card\n• Military ID\n• Employee ID with photo\n• Student ID with photo\n• American Red Cross Donor Card",
+    address: "Any of these work as proof of address:\n• Driver's License / State ID\n• Utility Bill\n• Bank Statement\n• Credit Card Statement\n• Mortgage Statement\n• Lease / Rental Agreement\n• Property Tax Statement\n• Insurance Document\n• Pay Stub\n• Vehicle Registration\n• Voter Registration\n• Government Correspondence\n• School/College Document",
     human: "Of course — call our team directly at 212.996.9500 or email info@careplasma.com and we'll take it from here."
   };
 
